@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<registration_data version="1.0">
+   <environment>
+      <hostname>user1-PC</hostname>
+      <hostId/>
+      <osName>Windows 7</osName>
+      <osVersion>6.1</osVersion>
+      <osArchitecture>x86</osArchitecture>
+      <systemModel>P5K-E</systemModel>
+      <systemManufacturer>System manufacturer</systemManufacturer>
+      <cpuManufacturer>GenuineIntel</cpuManufacturer>
+      <serialNumber>System Serial Number</serialNumber>
+   </environment>
+   <registry urn="urn:st:b18e55d1-9882-4115-871d-8dc6c68b3c53" version="1.0">
+      <service_tag>
+         <instance_urn>urn:st:7848af79-d284-4f66-883c-1b7bd65ada61</instance_urn>
+         <product_name>Java SE 7 Development Kit</product_name>
+         <product_version>1.7.0_13</product_version>
+         <product_urn>JSEZ9-007-ZZZZ</product_urn>
+         <product_parent_urn>urn:uuid:dc1704fe-264f-11dc-9482-080020a9ed93</product_parent_urn>
+         <product_parent>Java Platform Standard Edition 7 (Java SE 7)</product_parent>
+         <product_defined_inst_id>id=1.7.0_13-b20 x86,dir=C:\Program Files\Java\jdk1.7.0_13\jre</product_defined_inst_id>
+         <product_vendor>Oracle Corporation</product_vendor>
+         <platform_arch>x86</platform_arch>
+         <timestamp>2013-02-08 19:46:33 GMT</timestamp>
+         <container>global</container>
+         <source>Windows JDK i586 installer</source>
+         <installer_uid>-1</installer_uid>
+      </service_tag>
+   </registry>
+</registration_data>
