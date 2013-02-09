@@ -3,8 +3,9 @@ package masuka.robocode.playfield;
 import java.util.ArrayList;
 import java.util.HashMap;
 import robocode.AdvancedRobot;
+import robocode.ScannedRobotEvent;
 
-public class PlayField {
+public class PlayField { 
     
     private int fieldHight;
     private int fieldWidth;
@@ -25,7 +26,19 @@ public class PlayField {
         return robotsOnField.containsKey(robotName);
     }
     
-    public void addRobot() {
+    public PlayRobot getRobot(String robotName) {
+        return robotsOnField.get(robotName);
+    }
+    
+    public void registerScannedRobotEvent(ScannedRobotEvent scanEvent) {
+        
+        String robotName = scanEvent.getName();
+        
+        if (!this.containsRobot(robotName)) {
+            robotsOnField.put(robotName, new PlayRobot(this, scanEvent));
+        }
+        
+        robotsOnField.get(robotName).updateWithScanEvent(scanEvent);
         
     }
     

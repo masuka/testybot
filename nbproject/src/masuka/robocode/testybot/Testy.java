@@ -79,6 +79,7 @@ public class Testy extends AdvancedRobot {
             enemy.setPower(3000);
         }
         setTurnRadarLeftRadians(getRadarTurnRemainingRadians());
+        
     }
 
     private void doStuff() {
