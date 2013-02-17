@@ -26,10 +26,12 @@ public class Enemy extends ForcePoint {
         setX(robot.getX() + Math.sin(Math.toRadians(absBearing))*e.getDistance());
         setY(robot.getY() + Math.cos(Math.toRadians(absBearing))*e.getDistance());
         double energyDrop = energy - e.getEnergy();
-        if (energyDrop < 3.5 && energyDrop > 0)
+        if (energyDrop < 3.5 && energyDrop > 0) {
             bulletFired = true;
-        else
+        }
+        else {
             bulletFired = false;
+        }
         prevEnergy = energy;
         energy = e.getEnergy();
     }

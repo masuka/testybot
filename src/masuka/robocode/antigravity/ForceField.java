@@ -48,12 +48,17 @@ public class ForceField extends ForceSource {
     public void addPoint(String name, Gpoint gp, double power) {
         sources.put(name, new ForcePoint(gp, power));
     }
+    
+    public void addPoint(String name, Gpoint gp) {
+        sources.put(name, new ForcePoint(gp));
+    }
 
     public void addLine(String name, double x1, double y1,
             double x2, double y2, double power) {
         sources.put(name, new ForceLine(x1, y1, x2, y2, power));
     }
 
+    @Override
     public Gvector forceInPoint(double a, double b) {
         Gvector fv = new Gvector(0, 0);
         ForceSource fs;
@@ -67,6 +72,7 @@ public class ForceField extends ForceSource {
 
     protected ArrayList<String> removeNames = new ArrayList<String>();
 
+    @Override
     public void updateTick() {
         tick++;
         ForceSource fs;
@@ -74,8 +80,9 @@ public class ForceField extends ForceSource {
         for (String s:sources.keySet()) {
             fs = sources.get(s);
             fs.updateTick();
-            if (fs.isInactive())
+            if (fs.isInactive()) {
                 removeNames.add(s);
+            }
         }
 
         for (String s:removeNames) {
@@ -84,6 +91,7 @@ public class ForceField extends ForceSource {
      
     }
 
+    @Override
     public void onPaint(Graphics2D g) {
        
         int step = 20, x, y;
@@ -112,8 +120,9 @@ public class ForceField extends ForceSource {
             }
         }
 
-        for (String s:sources.keySet())
+        for (String s:sources.keySet()) {
             sources.get(s).onPaint(g);
+        }
         
     }
 

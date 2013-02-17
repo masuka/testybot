@@ -31,7 +31,7 @@ public class VirtualBullet extends ForcePoint {
        heading = new Gvector(h);
        headLine = new Gline(new Gpoint(x, y), heading);
        energy = e;
-       velosity = h.getLength();// 20 - 3*energy;
+       velosity = 20 - 3*e;// 20 - 3*energy;
        heading.setLenght(velosity);
        incXY(heading);
        super.order = 1;
@@ -53,8 +53,9 @@ public class VirtualBullet extends ForcePoint {
 
         double distance = headLine.getDistance(new Gpoint(a, b));
         Gpoint p = new Gpoint(a, b);
-        if (point.getDistance(a, b) > aheadL || headLine.getDistance(a, b) > radius || heading.getDotProduct(new Gvector(point, p)) < 0)
+        if (point.getDistance(a, b) > aheadL || headLine.getDistance(a, b) > radius || heading.getDotProduct(new Gvector(point, p)) < 0) {
             return new Gvector(0, 0);
+        }
 
         //if (distance <= 20)
         //    distance = 0.5;

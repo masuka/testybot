@@ -27,7 +27,15 @@ public abstract class ForceSource {
     public void invertPower() {
         power *= -1;
     }
-
+    
+    public void setAttractive() {
+        power = -1*Math.abs(power);
+    }
+    
+    public void setDistractive() {
+        power = Math.abs(power);
+    }
+    
     public double getPower() {
         return power;
     }

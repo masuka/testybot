@@ -1,8 +1,8 @@
 package masuka.robocode.antigravity;
 
+import java.awt.*;
 import masuka.robocode.utils.geometry.Gpoint;
 import masuka.robocode.utils.geometry.Gvector;
-import java.awt.*;
 
 public class ForcePoint extends ForceSource {
 
@@ -14,6 +14,10 @@ public class ForcePoint extends ForceSource {
 
     public ForcePoint(Gpoint pi, double pw) {
         setPower(pw);
+        point = pi;
+    }
+    
+    public ForcePoint(Gpoint pi) {
         point = pi;
     }
 
@@ -49,7 +53,9 @@ public class ForcePoint extends ForceSource {
         point.incXY(vx, vy);
     }
 
+    @Override
     public Gvector forceInPoint(double a, double b) {
+        
         double distance = point.getDistance(a, b);
         double force;
 
@@ -63,14 +69,18 @@ public class ForcePoint extends ForceSource {
         v.setLenght(force);
 
         return v;
+        
     }
 
+    @Override
     public void onPaint(Graphics2D g) {
+        
         int x1 = (int)point.getX(), y1 = (int)point.getY(), radius = 10;
         //g.setColor(Color.BLACK);
         //g.fillOval(x1-14, y1-14, 28, 28);
         g.setColor(power > 0 ? DITRACT_COLOR : ATTRACT_COLOR);
         g.fillOval(x1 - radius, y1 - radius, 2*radius, 2*radius);
+        
     }
 
 }
