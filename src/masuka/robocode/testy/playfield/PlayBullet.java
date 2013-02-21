@@ -7,6 +7,7 @@ package masuka.robocode.testy.playfield;
 
 import java.awt.Graphics2D;
 import masuka.robocode.antigravity.ForcePoint;
+import masuka.robocode.utils.geometry.Geometry;
 import masuka.robocode.utils.geometry.Gline;
 import masuka.robocode.utils.geometry.Gpoint;
 import masuka.robocode.utils.geometry.Gvector;
@@ -70,6 +71,10 @@ public class PlayBullet extends ForcePoint {
         return getX() < 0 || getY() < 0 || getX() > playField.getFieldWidth() || getY() > playField.getFieldHight();
     }
 
+    private Gpoint p = Gpoint.getZeroPoint();
+    private Gpoint pp = Gpoint.getZeroPoint();
+    private Gvector v = Gvector.getZeroVector();
+    
     @Override
     public Gvector forceInPoint(double a, double b) {
         
@@ -78,10 +83,11 @@ public class PlayBullet extends ForcePoint {
         }
         
         double distance = headLine.getDistance(new Gpoint(a, b));
-        Gpoint p = new Gpoint(a, b);
-        Gpoint pp = headLine.getProectoin(p);
+        p.setXY(a, b);
+        pp.setXY(Geometry.getProectionX(p, headLine), Geometry.getProectionY(p, headLine));
+        v.setVxVy(point, p);
         if (point.getDistance(a, b) > aheadDisMultiplier * velosity || headLine.getDistance(a, b) > sidesDistance
-                || heading.getDotProduct(new Gvector(point, p)) < 0) {
+                || heading.getDotProduct(v) < 0) {
             return Gvector.getZeroVector();
         }
         
@@ -90,10 +96,10 @@ public class PlayBullet extends ForcePoint {
         }
         
         double force = Math.signum(power)*power/Math.pow(distance, declineOrder);
-        Gvector v = new Gvector(pp, p);
-        v.setLenght(force);
+        forceVector.setVxVy(pp, p);
+        forceVector.setLenght(force);
 
-        return v;
+        return forceVector;
         
     }
     

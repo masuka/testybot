@@ -79,9 +79,27 @@ public class Geometry {
 
         return new Gpoint(p.x - alpha*a, p.y - alpha*b);
     }
-
-    public static Gpoint getProection(Gline l, Gpoint p) {
-        return getProection(p, l);
+    
+    public static double getProectionX(Gpoint p, Gline l) {
+        double a, b, c;
+        a = l.getA();
+        b = l.getB();
+        c = l.getC();
+        
+        double alpha = (a*p.x + b*p.y + c)/(a*a + b*b);
+        
+        return p.x - alpha*a;
+    }
+    
+    public static double getProectionY(Gpoint p, Gline l) {
+        double a, b, c;
+        a = l.getA();
+        b = l.getB();
+        c = l.getC();
+        
+        double alpha = (a*p.x + b*p.y + c)/(a*a + b*b);
+        
+        return p.y - alpha*b;
     }
 
     //

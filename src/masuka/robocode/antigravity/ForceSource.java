@@ -14,8 +14,11 @@ public abstract class ForceSource {
     protected double declineOrder = 2;
     protected boolean isInactive = false;
     protected boolean isTerminated = false;
+    protected Gvector forceVector = Gvector.getZeroVector();
 
-    public abstract Gvector forceInPoint(double a, double b);
+    public Gvector forceInPoint(double a, double b) {
+        return forceVector;
+    }
 
     public void setFrocePower(double p) {
         power = p;

@@ -64,14 +64,15 @@ public class ForceField extends ForceSource {
 
     @Override
     public Gvector forceInPoint(double a, double b) {
-        Gvector fv = new Gvector(0, 0);
+       
+        forceVector.setVxVy(0, 0);
         ForceSource fs;
         for (String s : sourcesOnField.keySet()) {
             fs = sourcesOnField.get(s);
-            fv.add(fs.forceInPoint(a, b));
+            forceVector.add(fs.forceInPoint(a, b));
         }
 
-        return fv;
+        return forceVector;
     }
 
     protected ArrayList<String> terminatedNames = new ArrayList<String>();

@@ -56,7 +56,9 @@ public class ForcePoint extends ForceSource {
     public void incXY(double vx, double vy) {
         point.incXY(vx, vy);
     }
-
+    
+    private Gpoint p = Gpoint.getZeroPoint();
+    
     @Override
     public Gvector forceInPoint(double a, double b) {
         
@@ -73,11 +75,11 @@ public class ForcePoint extends ForceSource {
         
         force = Math.signum(power)*Math.abs(power/Math.pow(distance, declineOrder));
 
-        Gpoint p = new Gpoint(a, b);
-        Gvector v = new Gvector(point, p);
-        v.setLenght(force);
+        p.setXY(a, b);
+        forceVector.setVxVy(point, p);
+        forceVector.setLenght(force);
 
-        return v;
+        return forceVector;
         
     }
 

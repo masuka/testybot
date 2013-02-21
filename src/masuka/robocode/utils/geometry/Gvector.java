@@ -70,11 +70,22 @@ public class Gvector extends Gobject {
         return vy;
     }
 
-    public void setVx(double newvx) {
-        vx = newvx;
+    public void setVx(double newVx) {
+        vx = newVx;
     }
 
-    public void setVy(double newvy) {
-        vy = newvy;
+    public void setVy(double newVy) {
+        vy = newVy;
     }
+    
+    public void setVxVy(Gpoint p1, Gpoint p2) {
+        vx = p2.x - p1.x;
+        vy = p2.y - p1.y;
+    }
+    
+    public void setVxVy(double newVx, double newVy) {
+        vx = newVx;
+        vy = newVy;
+    }
+    
 }
