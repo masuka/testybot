@@ -1,92 +1,95 @@
 package masuka.robocode.antigravity;
 
-import masuka.robocode.utils.geometry.Gpoint;
-import masuka.robocode.utils.geometry.Gvector;
 import java.awt.*;
 import java.util.*;
+import masuka.robocode.utils.geometry.Gpoint;
+import masuka.robocode.utils.geometry.Gvector;
 
 public class ForceField extends ForceSource {
 
-    private HashMap<String, ForceSource> sources = new HashMap<String, ForceSource>();
-    private int width, height;
+    private HashMap<String, ForceSource> sourcesOnField = new HashMap<String, ForceSource>();
+    protected int fieldWidth, fieldHight;
     private String defName = "Source";
     private int sourceCount = 0;
-
+    
+    public ForceField() {
+        this(0, 0);
+    }
+    
     public ForceField(double w, double h) {
-        width = (int) w;
-        height = (int) h;
+        fieldWidth = (int) w;
+        fieldHight = (int) h;
     }
 
     public ForceSource getSource(String name) {
-        return sources.get(name);
+        return sourcesOnField.get(name);
     }
 
-    public int getHeight() {
-        return height;
+    public int getFieldHight() {
+        return fieldHight;
     }
 
-    public int getWidth() {
-        return width;
+    public int getFieldWidth() {
+        return fieldWidth;
     }
 
-    public Collection<ForceSource> getAllSources() {
-        return sources.values();
+    public Collection<ForceSource> getAllForceSources() {
+        return sourcesOnField.values();
     }
 
-    public void addSource(String name, ForceSource fs) {
-        sources.put(name, fs);
+    public void addForceSource(String name, ForceSource fs) {
+        sourcesOnField.put(name, fs);
     }
 
-    public void addSource(ForceSource fs) {
-        sources.put(defName + sourceCount++, fs);
+    public void addForceSource(ForceSource fs) {
+        sourcesOnField.put(defName + sourceCount++, fs);
     }
 
-    public void addPoint(String name, double x, double y, double power) {
-        sources.put(name, new ForcePoint(x, y, power));
+    public void addForcePoint(String name, double x, double y, double power) {
+        sourcesOnField.put(name, new ForcePoint(x, y, power));
     }
 
-    public void addPoint(String name, Gpoint gp, double power) {
-        sources.put(name, new ForcePoint(gp, power));
+    public void addForcePoint(String name, Gpoint gp, double power) {
+        sourcesOnField.put(name, new ForcePoint(gp, power));
     }
     
-    public void addPoint(String name, Gpoint gp) {
-        sources.put(name, new ForcePoint(gp));
+    public void addForcePoint(String name, Gpoint gp) {
+        sourcesOnField.put(name, new ForcePoint(gp));
     }
 
-    public void addLine(String name, double x1, double y1,
+    public void addForceLine(String name, double x1, double y1,
             double x2, double y2, double power) {
-        sources.put(name, new ForceLine(x1, y1, x2, y2, power));
+        sourcesOnField.put(name, new ForceLine(x1, y1, x2, y2, power));
     }
 
     @Override
     public Gvector forceInPoint(double a, double b) {
         Gvector fv = new Gvector(0, 0);
         ForceSource fs;
-        for (String s : sources.keySet()) {
-            fs = sources.get(s);
+        for (String s : sourcesOnField.keySet()) {
+            fs = sourcesOnField.get(s);
             fv.add(fs.forceInPoint(a, b));
         }
 
         return fv;
     }
 
-    protected ArrayList<String> removeNames = new ArrayList<String>();
+    protected ArrayList<String> terminatedNames = new ArrayList<String>();
 
     @Override
-    public void updateTick() {
-        tick++;
-        ForceSource fs;
-        removeNames.clear();
-        for (String s:sources.keySet()) {
-            fs = sources.get(s);
-            fs.updateTick();
-            if (fs.isInactive()) {
-                removeNames.add(s);
+    public void update() {
+        
+        terminatedNames.clear();
+        for (String key:sourcesOnField.keySet()) {
+           ForceSource fs = sourcesOnField.get(key);
+            fs.update();
+            if (fs.isTerminated()) {
+               terminatedNames.add(key);
             }
         }
 
-        for (String s:removeNames) {
-           sources.remove(s);
+        for (String key:terminatedNames) {
+           sourcesOnField.remove(key);
         }
      
     }
@@ -98,18 +101,14 @@ public class ForceField extends ForceSource {
         Gvector v;
         ForceSource fs;
 
-        for (x = 10; x < width - 10; x += step) {
-            for (y = 10; y < height - 10; y += step) {
-//                if (x > getX() - 25 && x < getX() + 25 && y > getY() - 25 && y < getY() + 25
-//                        || enemy != null && x > enemy.getX() - 25 && x < enemy.getX() + 25 && y > enemy.getY() - 25 && y < enemy.getY() + 25) {
-//                    continue;
-//                }
+        for (x = 10; x < fieldWidth - 10; x += step) {
+            for (y = 10; y < fieldHight - 10; y += step) {
                 v = forceInPoint(x, y);
                 v.setLenght(10);
                 g.setColor(INACTIV_COLOR);
 
-                for (String s:sources.keySet()) {
-                   fs = sources.get(s);
+                for (String s:sourcesOnField.keySet()) {
+                   fs = sourcesOnField.get(s);
                    if (fs.forceInPoint(x, y).getLength() > 1) {
                        g.setColor(Color.ORANGE);
                        break;
@@ -120,8 +119,8 @@ public class ForceField extends ForceSource {
             }
         }
 
-        for (String s:sources.keySet()) {
-            sources.get(s).onPaint(g);
+        for (String s:sourcesOnField.keySet()) {
+            sourcesOnField.get(s).onPaint(g);
         }
         
     }

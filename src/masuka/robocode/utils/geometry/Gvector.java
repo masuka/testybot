@@ -4,7 +4,11 @@ package masuka.robocode.utils.geometry;
  * MyClass - a class by (your name here)
  */
 public class Gvector extends Gobject {
-
+    
+    public static Gvector getZeroVector() {
+        return new Gvector(0, 0);
+    }
+    
     protected double vx, vy;
 
     public Gvector(double vx, double vy) {

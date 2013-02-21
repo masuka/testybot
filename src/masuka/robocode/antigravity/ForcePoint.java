@@ -13,12 +13,16 @@ public class ForcePoint extends ForceSource {
     }
 
     public ForcePoint(Gpoint pi, double pw) {
-        setPower(pw);
+        setFrocePower(pw);
         point = pi;
     }
     
     public ForcePoint(Gpoint pi) {
         point = pi;
+    }
+    
+    public ForcePoint() {
+        point = new Gpoint(Double.NaN, Double.NaN);
     }
 
     public Gpoint getPoint() {
@@ -56,13 +60,18 @@ public class ForcePoint extends ForceSource {
     @Override
     public Gvector forceInPoint(double a, double b) {
         
+        if (isInactive()) {
+            return Gvector.getZeroVector();
+        }
+        
         double distance = point.getDistance(a, b);
         double force;
 
-        if (distance <= 18) {
-            distance = 0.5;
+        if (distance <= CLOSE_DISTANCE) {
+            distance = 1;
         }
-        force = Math.signum(power)*Math.abs(power/Math.pow(distance, order));
+        
+        force = Math.signum(power)*Math.abs(power/Math.pow(distance, declineOrder));
 
         Gpoint p = new Gpoint(a, b);
         Gvector v = new Gvector(point, p);

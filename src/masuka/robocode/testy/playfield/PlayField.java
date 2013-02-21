@@ -1,38 +1,41 @@
-package masuka.robocode.playfield;
+package masuka.robocode.testy.playfield;
 
 import java.util.HashMap;
 import masuka.robocode.antigravity.ForceField;
+import masuka.robocode.utils.geometry.Gpoint;
 import robocode.AdvancedRobot;
 import robocode.ScannedRobotEvent;
 
-public class PlayField { 
+public class PlayField extends ForceField { 
     
-    private int fieldHight;
-    private int fieldWidth;
+    public static final int MAX_ROBOT_VELOCITY = 8;
     
-    private HashMap<String, PlayRobot> robotsOnField;
-    private AdvancedRobot playerRobot;
-    private ForceField forceField = null;
+    protected HashMap<String, PlayRobot> robotsOnField = new HashMap<String, PlayRobot>();
+    protected AdvancedRobot myRobot;
+    protected Gpoint myRobotPoint = Gpoint.getZeroPoint();
+    protected long time = 0;
     
     public PlayField(AdvancedRobot player) {
         
-        playerRobot = player;
+        myRobot = player;
         fieldHight = (int) player.getBattleFieldHeight();
         fieldWidth = (int) player.getBattleFieldWidth();
-        robotsOnField = new HashMap<String, PlayRobot>();
-        
+ 
     }
-    
-    public void setForceField(ForceField field) {
-        forceField = field;
-    }
-    
-    public ForceField getForceField() {
-        return forceField;
-    } 
     
     public boolean containsRobot(String robotName) {
         return robotsOnField.containsKey(robotName);
+    }
+    
+    public long getTime() {
+        return time;
+    }
+    
+    @Override
+    public void update() {
+        myRobotPoint.setXY(myRobot.getX(), myRobot.getY());
+        super.update();
+        time++;
     }
     
     public PlayRobot getRobot(String robotName) {
@@ -58,8 +61,12 @@ public class PlayField {
         
     }
     
-    public AdvancedRobot getPlayerRobot() {
-        return playerRobot;
+    public AdvancedRobot getMyRobot() {
+        return myRobot;
+    }
+    
+    public Gpoint getMyRobotPoint() {
+        return myRobotPoint;
     }
     
     public void registerScannedRobotEvent(ScannedRobotEvent scanEvent) {
@@ -69,9 +76,9 @@ public class PlayField {
         if (!this.containsRobot(robotName)) {
             PlayRobot robot = new PlayRobot(this, scanEvent);
             robotsOnField.put(robotName, robot);
-            if (forceField != null) {
-                forceField.addPoint(robotName, robot.getPoint(), 3000);
-            }
+            
+            addForceSource(robotName, robot);
+            
         }
         
         robotsOnField.get(robotName).updateWithScanEvent(scanEvent);

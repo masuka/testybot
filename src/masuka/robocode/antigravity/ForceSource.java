@@ -1,34 +1,39 @@
 package masuka.robocode.antigravity;
 
-import masuka.robocode.utils.geometry.Gvector;
 import java.awt.*;
+import masuka.robocode.utils.geometry.Gvector;
 
 public abstract class ForceSource {
 
     static final public Color ATTRACT_COLOR = new Color(154, 205, 50);
     static final public Color DITRACT_COLOR = new Color(255, 69, 0);
     static final public Color INACTIV_COLOR = Color.GRAY;
+    static final public double CLOSE_DISTANCE = 20;
 
     protected double power = 1000;
-    protected double order = 2;
-    protected long tick = 0;
+    protected double declineOrder = 2;
     protected boolean isInactive = false;
+    protected boolean isTerminated = false;
 
     public abstract Gvector forceInPoint(double a, double b);
 
-    public void setPower(double p) {
+    public void setFrocePower(double p) {
         power = p;
     }
 
-    public void setOrder(double o) {
-        order = o;
+    public void setForceDistanceDeclineOrder(double order) {
+        declineOrder = order;
+    }
+    
+    public double getForceDistanceDeclineOrder() {
+        return declineOrder;
     }
 
-    public void invertPower() {
+    public void invertForcePower() {
         power *= -1;
     }
     
-    public void setAttractive() {
+    public void setForceAttractive() {
         power = -1*Math.abs(power);
     }
     
@@ -36,26 +41,30 @@ public abstract class ForceSource {
         power = Math.abs(power);
     }
     
-    public double getPower() {
+    public double getForcePower() {
         return power;
-    }
-
-    public double getOrder() {
-        return order;
-    }
-
-    public double getTick() {
-        return tick;
-    }
-
-    public void updateTick() {
-        tick++;
     }
 
     public boolean isInactive() {
         return isInactive;
     }
-
+    
+    public void setInactive(boolean in) {
+        isInactive = in;
+    }
+    
+    public void setTerminated() {
+        isTerminated = true;
+    }
+    
+    public boolean isTerminated() {
+        return isTerminated;
+    }
+    
+    public void update() {
+        
+    }
+    
     public abstract void onPaint(Graphics2D g);
     
 }

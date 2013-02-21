@@ -4,7 +4,11 @@ package masuka.robocode.utils.geometry;
  * MyClass - a class by (your name here)
  */
 public class Gpoint extends Gobject {
-
+    
+    public static Gpoint getZeroPoint() {
+        return new Gpoint(0, 0);
+    }
+    
     protected double x, y;
 
     public Gpoint(double x, double y) {

@@ -1,16 +1,16 @@
 package masuka.robocode.antigravity;
 
-import masuka.robocode.utils.geometry.Gpoint;
-import masuka.robocode.utils.geometry.Gline;
-import masuka.robocode.utils.geometry.Gvector;
 import java.awt.*;
+import masuka.robocode.utils.geometry.Gline;
+import masuka.robocode.utils.geometry.Gpoint;
+import masuka.robocode.utils.geometry.Gvector;
 
 public class ForceLine extends ForceSource {
 
     private Gline line;
 
     public ForceLine(Gline l, double p) {
-        setPower(p);
+        setFrocePower(p);
         line = l;
     }
 
@@ -20,12 +20,12 @@ public class ForceLine extends ForceSource {
 
     public Gvector forceInPoint(double a, double b) {
         double distance = line.getDistance(new Gpoint(a, b));
-        if (distance <= 20) {
-            distance = 0.5;
+        if (distance <= CLOSE_DISTANCE) {
+            distance = 1;
         }
         double force;
 
-        force = Math.signum(power)*power/Math.pow(distance, order);
+        force = Math.signum(power)*power/Math.pow(distance, declineOrder);
         Gpoint p = new Gpoint(a, b);
         Gpoint pp = line.getProectoin(p);
         Gvector v = new Gvector(pp, p);

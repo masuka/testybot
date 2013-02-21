@@ -1,33 +1,29 @@
 
-package masuka.robocode.playfield;
+package masuka.robocode.testy.playfield;
 
 import java.util.ArrayList;
-import masuka.robocode.antigravity.ForceField;
-import masuka.robocode.utils.geometry.Gpoint;
+import masuka.robocode.antigravity.ForcePoint;
 import robocode.AdvancedRobot;
 import robocode.ScannedRobotEvent;
 
-public class PlayRobot {
+public class PlayRobot extends ForcePoint {
     
     private static int HISTORY_LENGHT = 50;
     private static double BULLET_FIRED_ENERGY = 3.6;
+    private static double DEFAULT_POWER = 3000;
     
-    private PlayField playField;
-    private ForceField forceField;
     private AdvancedRobot playerRobot;
     private ArrayList<ScannedRobotEvent> scanEventHistory;
     private String name;
-    private Gpoint point;
     
     public PlayRobot(PlayField pfield, ScannedRobotEvent initialScanEvent) {
         
-         scanEventHistory = new ArrayList<ScannedRobotEvent>();
-         name = initialScanEvent.getName();
-         playField = pfield;
-         playerRobot = pfield.getPlayerRobot();
-         forceField = pfield.getForceField();
-         point = new Gpoint(0, 0);
-         updateWithScanEvent(initialScanEvent);
+        scanEventHistory = new ArrayList<ScannedRobotEvent>();
+        name = initialScanEvent.getName();
+        playerRobot = pfield.getMyRobot();
+        updateWithScanEvent(initialScanEvent);
+        power = DEFAULT_POWER;
+        
     }
     
     public final void updateWithScanEvent(ScannedRobotEvent scanEvent) {
@@ -37,7 +33,7 @@ public class PlayRobot {
         }
         scanEventHistory.add(scanEvent);
         
-        updatePoint();
+        updateCoordinates();
        
     }
     
@@ -45,24 +41,12 @@ public class PlayRobot {
         return getScanEvent(0);
     }
     
-    private void updatePoint() {
+    private void updateCoordinates() {
        
         double absBearing = playerRobot.getHeading() + getBearing();
         point.setX(playerRobot.getX() + Math.sin(Math.toRadians(absBearing))*getDistance());
         point.setY(playerRobot.getY() + Math.cos(Math.toRadians(absBearing))*getDistance());
         
-    }
-    
-    public double getX() {
-        return point.getX();        
-    }
-    
-    public double getY() {
-        return point.getY();
-    }
-    
-    public Gpoint getPoint() {
-        return point;
     }
     
     public ScannedRobotEvent getScanEvent(int k) {

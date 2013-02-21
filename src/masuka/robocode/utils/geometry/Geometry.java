@@ -7,15 +7,6 @@ public class Geometry {
 
     //
     // getDistance
-    public static double getDistance(Gobject a, Gobject b) {
-
-        if (Gpoint.class.isInstance(a)) {
-
-        }
-
-        return getDistance(Gvector.class.cast(a), b.getClass().cast(b));
-    }
-
     public static double getDistance(Gpoint p1, Gpoint p2) {
         return getDistance(p1.x, p1.y, p2.x, p2.y);
     }

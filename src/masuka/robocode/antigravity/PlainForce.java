@@ -8,7 +8,7 @@ public class PlainForce extends ForceSource {
     private Gvector vector;
 
     public PlainForce(Gvector v, double p) {
-        setPower(p);
+        setFrocePower(p);
         vector = v;
     }
 
