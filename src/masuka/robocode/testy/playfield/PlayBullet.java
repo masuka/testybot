@@ -21,7 +21,8 @@ public class PlayBullet extends ForcePoint {
     private Gline headLine;
     private double velosity;
     private PlayField playField;
-    private double sidesDistance = 50, aheadDistance = 200;
+    private double sidesDistance = 50;
+    private double aheadDisMultiplier = 16;
 
     public PlayBullet(PlayField pf, double x, double y, Gvector h, double energy) {
         
@@ -79,7 +80,7 @@ public class PlayBullet extends ForcePoint {
         double distance = headLine.getDistance(new Gpoint(a, b));
         Gpoint p = new Gpoint(a, b);
         Gpoint pp = headLine.getProectoin(p);
-        if (point.getDistance(a, b) > aheadDistance || headLine.getDistance(a, b) > sidesDistance
+        if (point.getDistance(a, b) > aheadDisMultiplier * velosity || headLine.getDistance(a, b) > sidesDistance
                 || heading.getDotProduct(new Gvector(point, p)) < 0) {
             return Gvector.getZeroVector();
         }
