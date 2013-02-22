@@ -8,6 +8,7 @@ public abstract class ForceSource {
     static final public Color ATTRACT_COLOR = new Color(154, 205, 50);
     static final public Color DITRACT_COLOR = new Color(255, 69, 0);
     static final public Color INACTIV_COLOR = Color.GRAY;
+    static final public Color ACTIVE_COLOR = Color.ORANGE;
     static final public double CLOSE_DISTANCE = 20;
 
     protected double power = 1000;
@@ -68,6 +69,8 @@ public abstract class ForceSource {
         
     }
     
-    public abstract void onPaint(Graphics2D g);
+    public void onPaint(Graphics2D g) {
+        
+    }
     
 }

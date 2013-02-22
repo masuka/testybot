@@ -22,7 +22,7 @@ public class ForcePoint extends ForceSource {
     }
     
     public ForcePoint() {
-        point = new Gpoint(Double.NaN, Double.NaN);
+        point = Gpoint.getZeroPoint();
     }
 
     public Gpoint getPoint() {

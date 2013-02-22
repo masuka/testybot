@@ -30,7 +30,7 @@ public class ForceLine extends ForceSource {
         double force;
 
         force = Math.signum(power)*power/Math.pow(distance, declineOrder);
-        pp.setXY(Geometry.getProectionX(p, line), Geometry.getProectionY(p, line));
+        Geometry.calculateProection(p, line, pp);
         forceVector.setVxVy(pp, p);
         forceVector.setLenght(force);
 

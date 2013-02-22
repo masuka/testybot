@@ -6,6 +6,7 @@ import masuka.robocode.antigravity.*;
 import masuka.robocode.testy.playfield.PlayBullet;
 import masuka.robocode.testy.playfield.PlayField;
 import masuka.robocode.testy.playfield.PlayRobot;
+import masuka.robocode.testy.playfield.PlayWave;
 import masuka.robocode.utils.geometry.*;
 import robocode.*;
 import robocode.util.*;
@@ -69,6 +70,7 @@ public class Testy extends AdvancedRobot {
         if (enemy.hasFired()) {
            vecBul = new Gvector(enemy.getPoint(), new Gpoint(getX(), getY()));
            playField.addForceSource(new PlayBullet(playField, enemy.getX(), enemy.getY(), vecBul, enemy.getEnergyDrop()));
+           playField.addForceSource(new PlayWave(playField, enemy.getX(), enemy.getY(), enemy.getEnergyDrop()));
         }
 
         if (enemy.getDistance() > 400) {

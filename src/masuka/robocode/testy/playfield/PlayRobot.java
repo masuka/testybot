@@ -8,13 +8,14 @@ import robocode.ScannedRobotEvent;
 
 public class PlayRobot extends ForcePoint {
     
-    private static int HISTORY_LENGHT = 50;
-    private static double BULLET_FIRED_ENERGY = 3.6;
-    private static double DEFAULT_POWER = 3000;
+    private static final int HISTORY_LENGHT = 50;
+    private static final double BULLET_FIRED_ENERGY = 3.6;
+    private static final double DEFAULT_POWER = 3000;
     
     private AdvancedRobot playerRobot;
     private ArrayList<ScannedRobotEvent> scanEventHistory;
     private String name;
+    private double gunHeat = 0;
     
     public PlayRobot(PlayField pfield, ScannedRobotEvent initialScanEvent) {
         
@@ -46,6 +47,15 @@ public class PlayRobot extends ForcePoint {
         double absBearing = playerRobot.getHeading() + getBearing();
         point.setX(playerRobot.getX() + Math.sin(Math.toRadians(absBearing))*getDistance());
         point.setY(playerRobot.getY() + Math.cos(Math.toRadians(absBearing))*getDistance());
+        
+    }
+    
+    @Override
+    public void update() {
+        
+        if (hasGunHeat()) {
+            decreaseGunHeat();
+        }
         
     }
     
@@ -88,9 +98,31 @@ public class PlayRobot extends ForcePoint {
     
     public boolean hasFired() {
         
+        if (hasGunHeat()) {
+            return false;
+        }
+        
         double energyChange = getEnergyDrop();
-        return energyChange < BULLET_FIRED_ENERGY && energyChange > 0;
+        boolean fired = energyChange < BULLET_FIRED_ENERGY && energyChange > 0;
+        
+        return fired;
+        
+    }
     
+    public boolean hasGunHeat() {
+        return gunHeat > 0;
+    }
+    
+    private void decreaseGunHeat() {
+        
+        if (gunHeat > 0) {
+            gunHeat -= playerRobot.getGunCoolingRate();
+        }
+        
+        if (gunHeat < 0) {
+            gunHeat = 0;
+        }
+        
     }
     
 }

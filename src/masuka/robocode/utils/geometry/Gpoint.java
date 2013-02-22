@@ -19,6 +19,10 @@ public class Gpoint extends Gobject {
     public Gpoint(Gpoint p) {
         this(p.getX(), p.getY());
     }
+    
+    public Gpoint() {
+        this(0, 0);
+    }
 
     public double getDistance(Gline l) {
         return Geometry.getDistance(l, this);

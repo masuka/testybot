@@ -98,24 +98,21 @@ public class ForceField extends ForceSource {
     @Override
     public void onPaint(Graphics2D g) {
        
-        int step = 20, x, y;
+        int x, y;
         Gvector v;
         ForceSource fs;
-
-        for (x = 10; x < fieldWidth - 10; x += step) {
-            for (y = 10; y < fieldHight - 10; y += step) {
+        int step = Math.min(fieldHight, fieldWidth) / 30;
+        
+        for (x = step/2; x < fieldWidth - step/2; x += step) {
+            for (y = step/2; y < fieldHight - step/2; y += step) {
                 v = forceInPoint(x, y);
-                v.setLenght(10);
-                g.setColor(INACTIV_COLOR);
-
-                for (String s:sourcesOnField.keySet()) {
-                   fs = sourcesOnField.get(s);
-                   if (fs.forceInPoint(x, y).getLength() > 1) {
-                       g.setColor(Color.ORANGE);
-                       break;
-                   }
+                if (v.getLength() > 1) {
+                    g.setColor(ACTIVE_COLOR);
+                } else {
+                     g.setColor(INACTIV_COLOR);
                 }
-
+                
+                v.setLenght(step/2);    
                 g.drawLine(x, y, x + (int)v.getVx(), y + (int)v.getVy());
             }
         }

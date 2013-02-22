@@ -11,6 +11,7 @@ import masuka.robocode.utils.geometry.Geometry;
 import masuka.robocode.utils.geometry.Gline;
 import masuka.robocode.utils.geometry.Gpoint;
 import masuka.robocode.utils.geometry.Gvector;
+import robocode.Rules;
 
 /**
  *
@@ -31,7 +32,7 @@ public class PlayBullet extends ForcePoint {
        playField = pf;
        heading = new Gvector(h);
        headLine = new Gline(new Gpoint(x, y), heading);
-       velosity = 20 - 3*energy;
+       velosity = Rules.getBulletSpeed(energy);
        heading.setLenght(velosity);
        incXY(heading);
        super.declineOrder = 1;
@@ -58,8 +59,8 @@ public class PlayBullet extends ForcePoint {
         }
         
         Gpoint myRoboProj = headLine.getProectoin(myRoboPoint);
-        double timeToHitMyRobot = myRoboPoint.getDistance(myRoboProj) - 18 / PlayField.MAX_ROBOT_VELOCITY;
-        double timeToHitVbullet = point.getDistance(myRoboProj) - 18 / velosity;
+        double timeToHitMyRobot = Math.abs(myRoboPoint.getDistance(myRoboProj) - 18) / PlayField.MAX_ROBOT_VELOCITY;
+        double timeToHitVbullet = Math.abs(point.getDistance(myRoboProj) - 18) / velosity;
         if (timeToHitMyRobot > timeToHitVbullet) {
             return false;
         }
@@ -84,7 +85,7 @@ public class PlayBullet extends ForcePoint {
         
         double distance = headLine.getDistance(new Gpoint(a, b));
         p.setXY(a, b);
-        pp.setXY(Geometry.getProectionX(p, headLine), Geometry.getProectionY(p, headLine));
+        Geometry.calculateProection(p, headLine, pp);
         v.setVxVy(point, p);
         if (point.getDistance(a, b) > aheadDisMultiplier * velosity || headLine.getDistance(a, b) > sidesDistance
                 || heading.getDotProduct(v) < 0) {
