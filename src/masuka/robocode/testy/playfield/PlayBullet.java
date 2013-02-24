@@ -75,12 +75,13 @@ public class PlayBullet extends ForcePoint {
     private Gpoint p = Gpoint.getZeroPoint();
     private Gpoint pp = Gpoint.getZeroPoint();
     private Gvector v = Gvector.getZeroVector();
+    private Gvector zeroV = Gvector.getZeroVector();
     
     @Override
     public Gvector forceInPoint(double a, double b) {
         
         if (isInactive()) {
-            return Gvector.getZeroVector();
+            return zeroV;
         }
         
         double distance = headLine.getDistance(new Gpoint(a, b));

@@ -72,12 +72,7 @@ public class Testy extends AdvancedRobot {
            playField.addForceSource(new PlayBullet(playField, enemy.getX(), enemy.getY(), vecBul, enemy.getEnergyDrop()));
            playField.addForceSource(new PlayWave(playField, enemy.getX(), enemy.getY(), enemy.getEnergyDrop()));
         }
-
-        if (enemy.getDistance() > 400) {
-            playField.getSource(enemy.getName()).setForceAttractive();
-        } else if (enemy.getDistance() < 350) {
-            playField.getSource(enemy.getName()).setDistractive();
-        }
+        
         setTurnRadarLeftRadians(getRadarTurnRemainingRadians());
         
     }

@@ -13,6 +13,7 @@ public class PlayRobot extends ForcePoint {
     private static final double DEFAULT_POWER = 3000;
     
     private AdvancedRobot playerRobot;
+    private PlayField playField;
     private ArrayList<ScannedRobotEvent> scanEventHistory;
     private String name;
     private double gunHeat = 0;
@@ -24,6 +25,7 @@ public class PlayRobot extends ForcePoint {
         playerRobot = pfield.getMyRobot();
         updateWithScanEvent(initialScanEvent);
         power = DEFAULT_POWER;
+        playField = pfield;
         
     }
     
@@ -55,6 +57,12 @@ public class PlayRobot extends ForcePoint {
         
         if (hasGunHeat()) {
             decreaseGunHeat();
+        }
+        
+        if (getDistance() > 400) {
+            setForceAttractive();
+        } else if (getDistance() < 350) {
+            setDistractive();
         }
         
     }
