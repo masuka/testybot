@@ -53,13 +53,13 @@ public class PlayBullet extends ForcePoint {
     
     public boolean isAbleToHitMyRobot() {
         
-        Gpoint myRoboPoint = playField.getMyRobotPoint();
-        if (heading.getDotProduct(new Gvector(point, myRoboPoint)) < 0) {
+        Gpoint myRobotPoint = playField.getMyRobotPoint();
+        if (heading.getDotProduct(new Gvector(point, myRobotPoint)) < 0) {
             return false;
         }
         
-        Gpoint myRoboProj = headLine.getProectoin(myRoboPoint);
-        double timeToHitMyRobot = Math.abs(myRoboPoint.getDistance(myRoboProj) - 18) / PlayField.MAX_ROBOT_VELOCITY;
+        Gpoint myRoboProj = headLine.getProectoin(myRobotPoint);
+        double timeToHitMyRobot = Math.abs(myRobotPoint.getDistance(myRoboProj) - 18) / PlayField.MAX_ROBOT_VELOCITY;
         double timeToHitVbullet = Math.abs(point.getDistance(myRoboProj) - 18) / velosity;
         if (timeToHitMyRobot > timeToHitVbullet) {
             return false;

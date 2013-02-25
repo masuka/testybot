@@ -25,6 +25,11 @@ public class Gvector extends Gobject {
         vx = p2.x - p1.x;
         vy = p2.y - p1.y;
     }
+    
+    public Gvector(Gpoint p) {
+        vx = p.x;
+        vy = p.y;
+    }
 
     public double getLength() {
         return Geometry.getDistance(0, 0, vx, vy);
@@ -56,6 +61,11 @@ public class Gvector extends Gobject {
         vx += v.vx;
         vy += v.vy;
     }
+    
+    public void subtract(Gvector v) {
+        vx -= v.vx;
+        vy -= v.vy;
+    }
 
     public void setLenght(double l) {
         normalize();
@@ -86,6 +96,21 @@ public class Gvector extends Gobject {
     public void setVxVy(double newVx, double newVy) {
         vx = newVx;
         vy = newVy;
+    }
+    
+    public void setVxVy(Gvector v) {
+        vx = v.vx;
+        vy = v.vy;
+    }
+    
+    public void setVxVy(Gpoint p) {
+        vx = p.x;
+        vy = p.y;
+    }
+    
+    @Override
+    public String toString() {
+        return "[" + getLength() + "]" + "(" + vx + ", " + vy + ")";
     }
     
 }

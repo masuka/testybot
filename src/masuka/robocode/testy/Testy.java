@@ -118,7 +118,7 @@ public class Testy extends AdvancedRobot {
     
     }
 
-    private Gvector getVectorHeading() {
+    public Gvector getVectorHeading() {
         double angl = Math.toRadians(getHeading());
         double vel = getVelocity();
         return new Gvector(Math.sin(angl)*vel, Math.cos(angl)*vel);
